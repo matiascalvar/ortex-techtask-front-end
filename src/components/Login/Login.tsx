@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useLayoutEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import axios from 'axios';
 import validation from '../../utils/validation';
 import ResetPassword from '../Modal/ResetPassword';
@@ -11,7 +11,7 @@ const URL_SERVER: string = "http://localhost:3000";
 
 export default function Login() {
     interface Response {
-        price?:any, 
+        price?:string, 
         dt?:any
     }
     interface Errors{
@@ -32,11 +32,8 @@ export default function Login() {
     
         socket.onmessage = (msg) => {
           const res = JSON.parse(msg.data);
-          //   console.log("e.data", e.data);
-          //   console.log("response: ",res);
           if (res.price && res.dt) setResponse({price:res.price, dt:res.dt})
         };
-    
         // return () => {
         //     console.log("Dismounting...")
         //     socket.close();
@@ -120,19 +117,15 @@ export default function Login() {
 
             {/* Remember - Forgot Password */}
             <div className={styles.options}>
-                <div>   
-                    <input type="checkbox" name="rememberme" id="rememberme" />
-                    <label htmlFor="rememberme">Remember me</label>
-                </div>
-                
                 <p onClick={() => setOpen(true)}>Forgot Password?</p>
-                
-                </div>
-            {/* WEBSOCKET */}
-            <div className={styles.websocket}>
-                <p>1 EUR =  {response? response.price : null} USD</p>
-                <p>{response? (new Date(response.dt).toLocaleString()) === "Invalid Date"? null: new Date(response.dt).toLocaleString() : null}</p>
             </div>
+            {/* WEBSOCKET */}
+            {Object.keys(response).length !== 0 ?
+                <div className={styles.websocket}>
+                    <p>1 EUR =  {response? response.price : null} USD</p>
+                    <p>{response? (new Date(response.dt).toLocaleString()) === "Invalid Date"? null: new Date(response.dt).toLocaleString() : null}</p>
+                </div> 
+             : <div className={styles.loading}></div>}
             </div>
     </div>
   )
