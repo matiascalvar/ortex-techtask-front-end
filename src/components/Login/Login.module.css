@@ -119,6 +119,32 @@ input[type="checkbox"]:hover {
     cursor: pointer;
 }
 
+.loading {
+    display: inline-block;
+    /* width: 5px;
+    height: 5px; */
+    margin: auto;
+  }
+.loading:after {
+    content: " ";
+    display: block;
+    width: 34px;
+    height: 34px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    border-color: #fff transparent #fff transparent;
+    animation: loading 1.2s linear infinite;
+}
+@keyframes loading {
+    0% {
+        transform: rotate(0deg);
+}
+    100% {
+        transform: rotate(360deg);
+}
+}
+
 /* Media Queries */
 @media (max-width: 600px) {
     .card {
